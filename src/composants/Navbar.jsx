@@ -22,12 +22,12 @@ function Navbar() {
             </ul>
             {isCalendarOpen && (
                 <Calendar
-                    onClickDay={(date) => console.log(date)} // Handle date selection (optional)
+                    onClickDay={(date) => console.log(date)}
                 />
             )}
             <div className="user-section">
                 <i className="notification-icon"></i>
-                <img src={avatar} alt="User Avatar" className="user-avatar" />
+                <img src={avatar} alt="Avatar" className="user-avatar" />
             </div>
         </nav>
     );

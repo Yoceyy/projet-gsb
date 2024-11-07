@@ -1,5 +1,5 @@
 {
-  "name": "tpcoursbts",
+  "name": "projet",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "axios": "^1.7.7",
+    "projet": "file:",
     "react": "^18.3.1",
     "react-calendar": "^5.1.0",
     "react-dom": "^18.3.1",
