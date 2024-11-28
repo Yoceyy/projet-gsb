@@ -43,6 +43,24 @@ body {
     border-radius: 5px;
 }
 
+
+/* Le Bouton de déconnexion */
+
+.logout-button {
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background-color: #ff7875;
+}
+
+
+
 .user-section {
     display: flex;
     align-items: center;
