@@ -1,34 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import Cookies from 'js-cookie';
+import { useUser } from '../context/UserContext';
 import Navbar from './Navbar';
-import '../api/api.jsx';
-import "../App.css";
 
-function HomePage() {
-    const [user, setUser] = useState(null);
+const HomePage = () => {
+    const { user, setUser } = useUser();
 
     useEffect(() => {
-        // Récupération des informations utilisateur depuis le localStorage
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
+        // Vérifie si l'utilisateur est déjà chargé
+        if (!user) {
+            const userCookie = Cookies.get('user');
+            if (userCookie) {
+                try {
+                    const parsedUser = JSON.parse(userCookie); // Parse les données du cookie
+                    setUser(parsedUser); // Met à jour le contexte avec les données utilisateur
+                } catch (err) {
+                    console.error("Erreur lors de l'analyse des données utilisateur :", err);
+                }
+            }
         }
-    }, []);
+    }, [user, setUser]);
 
     return (
-        <div className="home-container"> {/*CLASS DU CSS DU BIENVENUE*/}
+        <div style={{ padding: '20px' }}>
             <Navbar />
-            <div className="content">
-                <h1>Bienvenue sur la page</h1>
-                {user ? (
-                    <div>
-                        <h2>Bonjour, {user.nom} {user.prenom} !</h2> {/* Retourne nom et prenom de l'utilisateur */}
-                    </div>
-                ) : (
-                    <p>Aucune information utilisateur disponible.</p> /*Si l'API ne fonctionne pas*/
-                )}
-            </div>
+            <h1>Bienvenue sur la page</h1>
+            {user ? (
+                <div>
+                    <h2>Bonjour, {user.nom} {user.prenom} !</h2>
+                </div>
+            ) : (
+                <p>Chargement des informations utilisateur...</p>
+            )}
         </div>
     );
-}
+};
 
 export default HomePage;

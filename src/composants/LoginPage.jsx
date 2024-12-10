@@ -1,67 +1,87 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import '../Css/Login.css';
+import Cookies from 'js-cookie'; // Gestion des cookies
+import { useUser } from '../context/UserContext'; // Contexte utilisateur
 
-function LoginPage() {
-    const [login, setLogin] = useState('');
+const LoginPage = () => {
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(false);
+    const [error, setError] = useState('');
     const navigate = useNavigate();
+    const { setUser } = useUser();
 
-    const getUser = async (login, password) => {
+    const handleLogin = async () => {
+        setError(''); // Réinitialiser les erreurs
         try {
-            const response = await axios.get(`http://172.16.61.61/restGSB/connexion`, {
-                params: { login, mdp: password }
+            // Construire l'URL avec URLSearchParams pour inclure les paramètres
+            const params = new URLSearchParams({
+                'email' : email,
+                'password' : password,
             });
-            return response.data;
-        } catch (error) {
-            console.error('Erreur lors de la requête GET:', error);
-            return null;
-        }
-    };
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
+            const apiUrl = `http://172.16.61.61/restGSB/connexion?${params}`;
 
-        const user = await getUser(login, password);
+            // Appel à l'API
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+            });
 
-        if (user) {
-            // Stocker l'utilisateur dans localStorage
-            localStorage.setItem('user', JSON.stringify(user));
-            navigate('/home');
-        } else {
-            setError(true);
+            // Vérifier le statut de la réponse
+            if (response.ok) {
+                const data = await response.json();
+                if (data.user) {
+                    // Enregistrer l'utilisateur dans le contexte et les cookies
+                    setUser(data.user);
+                    Cookies.set('user', JSON.stringify(data.user), { expires: 7 });
+                    // Redirection vers la page d'accueil
+                    navigate('/home');
+                } else {
+                    setError('Réponse inattendue du serveur.');
+                }
+            } else {
+                const errorData = await response.json();
+                setError(errorData.message || 'Login ou mot de passe incorrect.');
+            }
+        } catch (err) {
+            console.error('Erreur lors de la connexion :', err);
+            setError('Une erreur est survenue. Veuillez vérifier votre connexion réseau.');
         }
     };
 
     return (
-        <div className="login-container">
-            <div className="login-box">
-                <img src="https://image.noelshack.com/fichiers/2024/42/3/1729096806-image-gsb-1.png" alt="GSB Logo" className="logo" />
-                <h2>Galaxy Swiss Bourdin</h2>
-                <form onSubmit={handleLogin}>
-                    <label>Identifiez-vous</label>
-                    {error && <p className="error">Identifiants incorrects. Veuillez réessayer.</p>}
-                    <input
-                        type="text"
-                        placeholder="Login"
-                        value={login}
-                        onChange={(e) => setLogin(e.target.value)}
-                        required
-                    />
-                    <input
-                        type="password"
-                        placeholder="Mot de passe"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                    <button type="submit">Se connecter</button>
-                </form>
-            </div>
+        <div style={{ maxWidth: '400px', margin: '0 auto', textAlign: 'center' }}>
+            <h1>Connexion</h1>
+            {error && <p style={{ color: 'red', fontWeight: 'bold' }}>{error}</p>}
+            <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                style={{ display: 'block', width: '100%', padding: '10px', margin: '10px 0' }}
+            />
+            <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Mot de passe"
+                style={{ display: 'block', width: '100%', padding: '10px', margin: '10px 0' }}
+            />
+            <button
+                onClick={handleLogin}
+                style={{
+                    padding: '10px 20px',
+                    backgroundColor: '#007BFF',
+                    color: '#FFF',
+                    border: 'none',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                }}
+            >
+                Se connecter
+            </button>
         </div>
     );
-}
+};
 
 export default LoginPage;
