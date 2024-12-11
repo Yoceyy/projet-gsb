@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../App.css";
 import avatar from '../assets/Profile-Pic1670336376-2376224861.png';
-import "../Css/NavBar.css";
+import "../css/NavBar.css";
 import Calendar from 'react-calendar';
 
 function Navbar() {

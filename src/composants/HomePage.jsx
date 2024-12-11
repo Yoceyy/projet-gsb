@@ -7,13 +7,12 @@ const HomePage = () => {
     const { user, setUser } = useUser();
 
     useEffect(() => {
-        // Vérifie si l'utilisateur est déjà chargé
         if (!user) {
             const userCookie = Cookies.get('user');
             if (userCookie) {
                 try {
-                    const parsedUser = JSON.parse(userCookie); // Parse les données du cookie
-                    setUser(parsedUser); // Met à jour le contexte avec les données utilisateur
+                    const parsedUser = JSON.parse(userCookie);
+                    setUser(parsedUser);
                 } catch (err) {
                     console.error("Erreur lors de l'analyse des données utilisateur :", err);
                 }

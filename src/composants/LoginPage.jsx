@@ -1,47 +1,62 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie'; // Gestion des cookies
-import { useUser } from '../context/UserContext'; // Contexte utilisateur
+import { useUser } from '../context/UserContext';
+import '../css/Login.css';
 
 const LoginPage = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [login, setLogin] = useState(''); // Champ pour l'identifiant
+    const [mdp, setMdp] = useState(''); // Champ pour le mot de passe
+    const [error, setError] = useState(''); // Gestion des erreurs
     const navigate = useNavigate();
     const { setUser } = useUser();
 
     const handleLogin = async () => {
         setError(''); // Réinitialiser les erreurs
         try {
-            // Construire l'URL avec URLSearchParams pour inclure les paramètres
+            const apiUrl = `http://172.16.61.61/restGSB/connexion?`;
+
             const params = new URLSearchParams({
-                'email' : email,
-                'password' : password,
+                login : login, // "login"
+                mdp : mdp,   // "mdp"
             });
 
-            const apiUrl = `http://172.16.61.61/restGSB/connexion?${params}`;
+            console.log('URL appelée :', apiUrl)
 
-            // Appel à l'API
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-            });
+            const response = await fetch(apiUrl+params);
 
-            // Vérifier le statut de la réponse
-            if (response.ok) {
-                const data = await response.json();
-                if (data.user) {
-                    // Enregistrer l'utilisateur dans le contexte et les cookies
-                    setUser(data.user);
-                    Cookies.set('user', JSON.stringify(data.user), { expires: 7 });
-                    // Redirection vers la page d'accueil
-                    navigate('/home');
-                } else {
-                    setError('Réponse inattendue du serveur.');
-                }
+            console.log('Statut de la réponse :', response.status);
+
+            if (!response.ok) {
+                const errorData = response.headers.get('Content-Length') > 0 ? await response.json() : {};
+                console.log('Erreur retournée par le serveur :', errorData);
+                setError(errorData.message || 'Erreur lors de la connexion.');
+                return;
+            }
+
+            // Vérifiez si le contenu existe avant de l'analyser
+            const textResponse = await response.text(); // Récupère le texte brut de la réponse
+            const responseData = textResponse ? JSON.parse(textResponse) : null;
+
+            console.log('Données retournées par l\'API :', responseData);
+
+
+            if (responseData === null) {
+                // réponse est nulle
+                // afficher un message d'erreur 
+                setError('Aucune donnée reçue du serveur.');
             } else {
-                const errorData = await response.json();
-                setError(errorData.message || 'Login ou mot de passe incorrect.');
+                // Traitement normal des données
+                const user = {
+                    id: responseData.id,
+                    nom: responseData.nom,
+                    prenom: responseData.prenom,
+                    adresse: responseData.adresse,
+                    cp: responseData.cp,
+                    ville: responseData.ville,
+                };
+
+                setUser(user);
+                navigate('/home');
             }
         } catch (err) {
             console.error('Erreur lors de la connexion :', err);
@@ -49,34 +64,26 @@ const LoginPage = () => {
         }
     };
 
+
     return (
-        <div style={{ maxWidth: '400px', margin: '0 auto', textAlign: 'center' }}>
-            <h1>Connexion</h1>
-            {error && <p style={{ color: 'red', fontWeight: 'bold' }}>{error}</p>}
+        <div className="login-container">
+            <div className="login-box">
+                <img src="https://i.ibb.co/wyFG2qJ/logo.png" alt="GSB Logo" className="logo" />
+            </div>
             <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-                style={{ display: 'block', width: '100%', padding: '10px', margin: '10px 0' }}
+                type="text"
+                value={login} // Champ pour l'identifiant
+                onChange={(e) => setLogin(e.target.value)}
+                placeholder="Identifiant"
             />
             <input
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={mdp} // Champ pour le mot de passe
+                onChange={(e) => setMdp(e.target.value)}
                 placeholder="Mot de passe"
-                style={{ display: 'block', width: '100%', padding: '10px', margin: '10px 0' }}
             />
             <button
                 onClick={handleLogin}
-                style={{
-                    padding: '10px 20px',
-                    backgroundColor: '#007BFF',
-                    color: '#FFF',
-                    border: 'none',
-                    borderRadius: '5px',
-                    cursor: 'pointer',
-                }}
             >
                 Se connecter
             </button>

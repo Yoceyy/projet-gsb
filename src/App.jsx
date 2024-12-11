@@ -8,15 +8,13 @@ import { UserProvider } from './context/UserContext.jsx';
 
 export default function App() {
     return (
-        <Routes>
         <UserProvider>
-            <Route path="/" element={<LoginPage />} />
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/caladrier" element={<CalendarPage />} />
-
+            <Routes>
+                <Route path="/" element={<LoginPage />} />
+                <Route path="/home" element={<HomePage />} />
+                <Route path="/caladrier" element={<CalendarPage />} />
+            </Routes>
         </UserProvider>
-
-        </Routes>
     );
 }
 
