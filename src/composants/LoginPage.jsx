@@ -4,48 +4,36 @@ import { useUser } from '../context/UserContext';
 import '../css/Login.css';
 
 const LoginPage = () => {
-    const [login, setLogin] = useState(''); // Champ pour l'identifiant
-    const [mdp, setMdp] = useState(''); // Champ pour le mot de passe
-    const [error, setError] = useState(''); // Gestion des erreurs
+    const [login, setLogin] = useState('');
+    const [mdp, setMdp] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
     const { setUser } = useUser();
 
     const handleLogin = async () => {
-        setError(''); // Réinitialiser les erreurs
+        setError('');
         try {
             const apiUrl = `http://172.16.61.61/restGSB/connexion?`;
 
             const params = new URLSearchParams({
-                login : login, // "login"
-                mdp : mdp,   // "mdp"
+                login: login,
+                mdp: mdp,
             });
 
-            console.log('URL appelée :', apiUrl)
-
-            const response = await fetch(apiUrl+params);
-
-            console.log('Statut de la réponse :', response.status);
+            const response = await fetch(apiUrl + params);
 
             if (!response.ok) {
                 const errorData = response.headers.get('Content-Length') > 0 ? await response.json() : {};
-                console.log('Erreur retournée par le serveur :', errorData);
                 setError(errorData.message || 'Erreur lors de la connexion.');
                 return;
             }
 
-            // Vérifiez si le contenu existe avant de l'analyser
-            const textResponse = await response.text(); // Récupère le texte brut de la réponse
+            const textResponse = await response.text();
             const responseData = textResponse ? JSON.parse(textResponse) : null;
 
-            console.log('Données retournées par l\'API :', responseData);
-
-
             if (responseData === null) {
-                // réponse est nulle
-                // afficher un message d'erreur 
                 setError('Aucune donnée reçue du serveur.');
             } else {
-                // Traitement normal des données
                 const user = {
                     id: responseData.id,
                     nom: responseData.nom,
@@ -55,15 +43,14 @@ const LoginPage = () => {
                     ville: responseData.ville,
                 };
 
-                setUser(user);
-                navigate('/home');
+                setUser(user); // Enregistrer l'utilisateur dans le contexte
+                navigate('/home'); // Rediriger vers la page d'accueil
             }
         } catch (err) {
             console.error('Erreur lors de la connexion :', err);
             setError('Une erreur est survenue. Veuillez vérifier votre connexion réseau.');
         }
     };
-
 
     return (
         <div className="login-container">
@@ -72,19 +59,18 @@ const LoginPage = () => {
             </div>
             <input
                 type="text"
-                value={login} // Champ pour l'identifiant
+                value={login}
                 onChange={(e) => setLogin(e.target.value)}
                 placeholder="Identifiant"
             />
             <input
                 type="password"
-                value={mdp} // Champ pour le mot de passe
+                value={mdp}
                 onChange={(e) => setMdp(e.target.value)}
                 placeholder="Mot de passe"
             />
-            <button
-                onClick={handleLogin}
-            >
+            {error && <p className="error">{error}</p>}
+            <button onClick={handleLogin}>
                 Se connecter
             </button>
         </div>

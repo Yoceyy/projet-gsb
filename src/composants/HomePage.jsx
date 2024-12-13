@@ -1,36 +1,23 @@
-import React, { useEffect } from 'react';
-import Cookies from 'js-cookie';
-import { useUser } from '../context/UserContext';
+import React from 'react';
+import {useUser} from '../context/UserContext';
 import Navbar from './Navbar';
+import {Outlet} from 'react-router-dom';
 
 const HomePage = () => {
-    const { user, setUser } = useUser();
-
-    useEffect(() => {
-        if (!user) {
-            const userCookie = Cookies.get('user');
-            if (userCookie) {
-                try {
-                    const parsedUser = JSON.parse(userCookie);
-                    setUser(parsedUser);
-                } catch (err) {
-                    console.error("Erreur lors de l'analyse des données utilisateur :", err);
-                }
-            }
-        }
-    }, [user, setUser]);
+    const {user} = useUser();
 
     return (
-        <div style={{ padding: '20px' }}>
-            <Navbar />
-            <h1>Bienvenue sur la page</h1>
-            {user ? (
+        <div style={{padding: '20px'}}>
+            <Navbar/>
+            <h1>Bienvenue sur la page !!</h1>
+            {user && user.nom && user.prenom ? (
                 <div>
                     <h2>Bonjour, {user.nom} {user.prenom} !</h2>
                 </div>
             ) : (
-                <p>Chargement des informations utilisateur...</p>
+                <p>Chargement des informations utilisateur ou erreur dans les données...</p>
             )}
+            <Outlet/>
         </div>
     );
 };

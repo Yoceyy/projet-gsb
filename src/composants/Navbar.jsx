@@ -1,47 +1,43 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import "../App.css";
-import avatar from '../assets/Profile-Pic1670336376-2376224861.png';
+import React from "react";
 import "../css/NavBar.css";
-import Calendar from 'react-calendar';
+import {useUser} from "../context/UserContext"; // Assure that this is the correct context path
+import {Link, useNavigate} from "react-router-dom";
 
-function Navbar() {
-    const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-    const navigate = useNavigate(); // Pour rediriger après déconnexion
-
-    const toggleCalendar = () => {
-        setIsCalendarOpen(!isCalendarOpen);
-    };
+const Navbar = () => {
+    const {setUser} = useUser();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
-        // Actions pour la déconnexion
-        localStorage.removeItem('authToken'); // supprimer le token du stockage local
-        navigate('/'); // Rediriger vers la page de connexion
+        setUser(null);
+        navigate("/"); // Redirect to the login page
     };
 
     return (
         <nav className="navbar">
-            <div className="logo">GSB</div>
-            <ul className="nav-links">
-                <li><a href="#dashboard" className="active">Dashboard</a></li>
-                <li><a href="#accueil">Accueil</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#calendrier" onClick={toggleCalendar}>Calendar</a></li>
-                <li> <button onClick={handleLogout} className="logout-button"> Se déconnecter </button>
-                </li>
-            </ul>
-
-            {isCalendarOpen && (
-                <Calendar
-                    onClickDay={(date) => console.log(date)}
+            <div className="navbar-logo">
+                <img
+                    src="GSB"
+                    alt="GSB Logo"
+                    className="logo"
                 />
-            )}
-            <div className="user-section">
-                <i className="notification-icon"></i>
-                <img src={avatar} alt="Avatar" className="user-avatar"/>
+            </div>
+            <ul className="navbar-links">
+                <Link to="/home">Dashboard</Link>
+                <Link to="/home/rapport">Rapport</Link>
+                <Link to="/home/medecin">Medecins</Link>
+            </ul>
+            <div className="navbar-user">
+                <img
+                    src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+                    alt="User Icon"
+                    className="user-icon"
+                />
+                <button className="logout-button" onClick={handleLogout}>
+                    Déconnexion
+                </button>
             </div>
         </nav>
     );
-}
+};
 
 export default Navbar;
