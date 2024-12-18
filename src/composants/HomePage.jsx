@@ -2,6 +2,7 @@ import React from 'react';
 import {useUser} from '../context/UserContext';
 import Navbar from './Navbar';
 import {Outlet} from 'react-router-dom';
+import "../composants/Medecins.jsx"
 
 const HomePage = () => {
     const {user} = useUser();
