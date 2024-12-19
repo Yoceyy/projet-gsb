@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import "../composants/HomePage.jsx";
 import "../composants/Navbar.jsx";
+import "../css/infouser.css"
 import {useUser} from "../context/UserContext.jsx";
 
 const Rapport = () => {
@@ -16,7 +17,7 @@ const Rapport = () => {
     }
 
     return (
-        <div>
+        <div className="info-user">
             <h1>Information sur L'utilisateur :</h1>
             <div>
                 <p>ID: {user.id}</p>
