@@ -13,7 +13,7 @@ const LoginPage = () => {
     const handleLogin = async () => {
         setError('');
         try {
-            const apiUrl = `http://172.16.61.61/restGSB/connexion?`;
+            const apiUrl = `http://localhost/restGSB/connexion?`;
 
             const params = new URLSearchParams({
                 login: login,

@@ -16,7 +16,8 @@ const FicheMedecin = ({ medecin, onUpdate }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch(`http://172.16.61.61/restGSB/medecins/${medecin.id}`, {
+        console.log(formData);
+        fetch(`http://localhost/restGSB/medecins/${medecin.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData),
@@ -130,9 +131,9 @@ const Medecins = () => {
     const [activeTab, setActiveTab] = useState('fiche');
 
     useEffect(() => {
-        fetch('http://172.16.61.61/restGSB/medecins?nom=V')
+        fetch('http://localhost/restGSB/medecins?nom=V')
             .then((response) => {
-                if (!response.ok) throw new Error('Erreur lors du chargement des données');
+                if (!response.ok) throw new Error('Erreur du au chargement des données');
                 return response.json();
             })
             .then((data) => {

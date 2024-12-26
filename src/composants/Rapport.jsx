@@ -20,7 +20,6 @@ const Rapport = () => {
         <div className="info-user">
             <h1>Information sur L'utilisateur :</h1>
             <div>
-                <p>ID: {user.id}</p>
                 <p>Nom: {user.nom}</p>
                 <p>Prénom: {user.prenom}</p>
                 <p>Adresse: {user.adresse}</p>
