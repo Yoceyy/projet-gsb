@@ -11,26 +11,31 @@ const FicheMedecin = ({ medecin, onUpdate }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
+        setFormData((prev) => {
+            console.log("A "+prev)
+            console.log("B "+name +"=>"+value)
+            return ({...prev, [name]: value})
+        });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
-        fetch(`http://localhost/restGSB/medecins/${medecin.id}`, {
+        console.log(JSON.stringify(formData));
+        fetch(`http://localhost/restGSB/majMedecin/${medecin.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData),
         })
             .then((response) => {
-                if (!response.ok) throw new Error("Erreur lors de la mise à jour");
+                console.error(response)
+                if (!response.ok) throw new Error("A Erreur lors de la mise à jour");
                 return response.json();
             })
             .then((updatedMedecin) => {
                 setSuccessMessage("Mise à jour effectuée");
                 onUpdate(updatedMedecin);
             })
-            .catch((error) => console.error("Erreur:", error));
+            .catch((error) => console.error("C Erreur:", error));
     };
 
     if (!medecin) return <p>Sélectionnez un médecin pour voir ou modifier les détails.</p>;
@@ -38,6 +43,7 @@ const FicheMedecin = ({ medecin, onUpdate }) => {
     return (
         <div>
             <h3>Fiche Médecin</h3>
+
             <form onSubmit={handleSubmit}>
                 <div style={{ marginBottom: "10px" }}>
                     <label>Nom :</label>
@@ -59,6 +65,7 @@ const FicheMedecin = ({ medecin, onUpdate }) => {
                         style={{ width: "100%" }}
                     />
                 </div>
+
                 <div style={{ marginBottom: "10px" }}>
                     <label>Adresse :</label>
                     <input
@@ -69,6 +76,7 @@ const FicheMedecin = ({ medecin, onUpdate }) => {
                         style={{ width: "100%" }}
                     />
                 </div>
+
                 <div style={{ marginBottom: "10px" }}>
                     <label>Tel :</label>
                     <input
@@ -79,16 +87,18 @@ const FicheMedecin = ({ medecin, onUpdate }) => {
                         style={{ width: "100%" }}
                     />
                 </div>
+
                 <div style={{ marginBottom: "10px" }}>
-                    <label>Spécialité complémentaire :</label>
+                    <label>Spécialité :</label>
                     <input
                         type="text"
-                        name="specialiteComplementaire"
-                        value={formData.specialiteComplementaire || ''}
+                        name="specialite"
+                        value={formData.specialite || ''}
                         onChange={handleChange}
                         style={{ width: "100%" }}
                     />
                 </div>
+
                 <div style={{ marginBottom: "10px" }}>
                     <label>Département :</label>
                     <input
@@ -99,6 +109,7 @@ const FicheMedecin = ({ medecin, onUpdate }) => {
                         style={{ width: "100%" }}
                     />
                 </div>
+
                 <button type="submit" style={{ backgroundColor: "blue", color: "white", padding: "10px", borderRadius: "5px", border: "none" }}>
                     Mettre à jour
                 </button>
@@ -107,6 +118,9 @@ const FicheMedecin = ({ medecin, onUpdate }) => {
         </div>
     );
 };
+
+
+
 
 // Composant pour afficher les rapports d'un médecin
 const RapportsMedecin = ({ medecin }) => {
@@ -195,6 +209,7 @@ const Medecins = () => {
                         <p>Aucun médecin trouvé.</p>
                     ))}
             </ul>
+
             {selectedMedecin && (
                 <div style={{ marginTop: '20px' }}>
                     <div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
