@@ -3,7 +3,6 @@ import LoginPage from "./composants/LoginPage.jsx";
 import HomePage from "./composants/HomePage.jsx";
 import { UserProvider } from './context/UserContext.jsx';
 import Rapport from "./composants/Rapport.jsx";
-import React from "react";
 import Medecins from "./composants/Medecins.jsx"
 export default function App() {
     return (
