@@ -41,12 +41,14 @@ L'application permet aux visiteurs médicaux de gérer leurs **rapports de visit
    npm install
 
 3. **Lancer l’application**
-  ```bash
+   ```bash
+   
     npm run dev
+-------------------------------------------------
 
+## 📚 Objectifs pédagogiques
 
-4. **📚 Objectifs pédagogiques**
-
+---------------------------
 
 Authentification sécurisée (JWT / sessions)
 
@@ -58,10 +60,6 @@ Manipulation de données : affichage, modification, suppression
 
 Mise en production simulée avec Portainer (conteneurisation)
 
-
-![image](https://image.noelshack.com/fichiers/2025/18/3/1746007698-capture-d-cran-du-2025-04-30-12-02-51.png)
-
-![Aperçu de l'application](https://image.noelshack.com/fichiers/2025/18/3/1746007698-capture-d-cran-du-2025-04-30-12-03-43.png)
 
 
 
