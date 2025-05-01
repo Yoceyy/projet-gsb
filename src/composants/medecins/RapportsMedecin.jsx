@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
+import "/home/yooceyy/Bureau/projet-gsb/src/css/RapportMedecin.css";
 
 const RapportsMedecin = ({ medecin }) => {
     const [rapports, setRapports] = useState([]);
@@ -20,6 +21,7 @@ const RapportsMedecin = ({ medecin }) => {
                 //Renvoie la réponse au format JSON
                 return response.json();
             })
+            //Récupère les données
             .then((data) => {
                 setRapports(data);
                 setLoading(false);
@@ -44,12 +46,12 @@ const RapportsMedecin = ({ medecin }) => {
     }
 
     return (
-        <div>
-            <h3>Rapports du Médecin</h3>
-            <p>Liste des rapports pour le médecin : {medecin.nom} {medecin.prenom}</p>
-            <table border="1" cellPadding="5" style={{ width: "100%", borderCollapse: "collapse", marginBottom: "20px" }}>
+        <div className="Medecins">
+            <h3 className="titrerapport"> Rapports du Médecin</h3>
+            <p className="listerapportmedecin"> Liste des rapports pour le médecin : {medecin.nom} {medecin.prenom}</p>
+            <table border="1" cellPadding="6" style={{ width: "100%", borderCollapse: "collapse", marginBottom: "30px" }}>
                 <thead>
-                    <tr style={{ background: "#007bff", color: "white" }}>
+                    <tr className="entete">
                         <th>Date</th>
                         <th>Motif</th>
                         <th>Bilan</th>
@@ -59,7 +61,7 @@ const RapportsMedecin = ({ medecin }) => {
                 <tbody>
                     {rapports.length > 0 ? (
                         rapports.map((rapport) => (
-                            <tr key={rapport.id}>
+                            <tr className="listevisiteur" key={rapport.id}>
                                 <td>{rapport.date}</td>
                                 <td>{rapport.motif}</td>
                                 <td>{rapport.bilan}</td>
@@ -74,7 +76,10 @@ const RapportsMedecin = ({ medecin }) => {
                 </tbody>
             </table>
         </div>
+        
     );
 };
+
+
 
 export default RapportsMedecin;

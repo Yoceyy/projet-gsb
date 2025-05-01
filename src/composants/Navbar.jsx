@@ -28,7 +28,7 @@ const Navbar = () => {
             </ul>
             <div className="navbar-user">
                 <img
-                    src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+                    src="https://www.programme-tv.net/imgre/fit/http.3A.2F.2Fprd2-bone-image.2Es3-website-eu-west-1.2Eamazonaws.2Ecom.2FTEL.2Enews.2F2018.2F01.2F12.2Fa619be4e-d4eb-4dc6-8c3b-a35a3d9f11ed.2Ejpeg/900x506/quality/70/crop-from/top/breaking-bad-preparation-du-spin-off-sur-saul-goodman.jpg"
                     alt="User Icon"
                     className="user-icon"
                 />

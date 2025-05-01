@@ -1,0 +1,42 @@
+.titrerapport {
+    color: #007bff;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.listerapportmedecin {
+    color: black;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 20px;
+    border-radius: 2px;
+    padding: 10px;
+    font-weight: bold;
+
+
+}
+
+.entete {
+    color: black;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 20px;
+    border-radius: 2px;
+    border: 1px solid #000000;
+    padding: 10px;
+
+}
+
+.listevisiteur {
+    color: black;
+    text-align: center;
+    background-color: #1094ff56;
+    font-size: 18px;
+    margin-top: 20px;
+    border-radius: 2px;
+    border: 2px solid #000000;
+    padding: 10px;
+    
+
+}

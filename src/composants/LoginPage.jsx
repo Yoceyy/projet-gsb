@@ -57,6 +57,7 @@ const LoginPage = () => {
             <div className="login-box">
                 <img src="https://i.ibb.co/wyFG2qJ/logo.png" alt="GSB Logo" className="logo" />
             </div>
+            
             <input
                 type="text"
                 value={login}

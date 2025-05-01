@@ -106,4 +106,6 @@ const FicheMedecin = ({ medecin, onUpdate }) => {
     );
 };
 
+
+
 export default FicheMedecin;
