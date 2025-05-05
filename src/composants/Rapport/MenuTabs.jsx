@@ -2,7 +2,7 @@ import React from 'react';
 
 const MenuTabs = ({ activeTab, setActiveTab }) => {
     return (
-        <div className="menu">
+        <div className="menu-ajout-rapport">
             <button
                 className={activeTab === 'ajouter' ? 'active-tab' : ''}
                 onClick={() => setActiveTab('ajouter')}

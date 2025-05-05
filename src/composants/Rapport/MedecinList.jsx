@@ -1,7 +1,9 @@
 // Importation de React pour utiliser JSX et les fonctionnalités de React.
+// eslint-disable-next-line no-unused-vars
 import React from 'react';
 
 // Déclaration du composant fonctionnel MedecinList avec des props destructurées.
+// eslint-disable-next-line react/prop-types
 const MedecinList = ({ medecins, selectedMedecin, onSelect, onChangeMedecin }) => (
     // Conteneur principal pour la liste des médecins.
     <div className="list-medecins">
@@ -16,7 +18,7 @@ const MedecinList = ({ medecins, selectedMedecin, onSelect, onChangeMedecin }) =
                 <p>Médecin sélectionné : {selectedMedecin.nom} {selectedMedecin.prenom}</p>
 
                 {/* Bouton pour changer le médecin sélectionné, déclenche la fonction onChangeMedecin */}
-                <button onClick={onChangeMedecin} className="change-button">Changer de médecin</button>
+                <button onClick={onChangeMedecin} className="change-button-ajout-rapport">Changer de médecin</button>
             </div>
         ) : (
             // Si aucun médecin n'est sélectionné, vérifie si la liste des médecins est non vide.
@@ -31,7 +33,7 @@ const MedecinList = ({ medecins, selectedMedecin, onSelect, onChangeMedecin }) =
                             {med.nom} {med.prenom}
 
                             {/* Bouton pour sélectionner un médecin, déclenche la fonction onSelect avec le médecin en paramètre */}
-                            <button onClick={() => onSelect(med)} className="select-button">Sélectionner</button>
+                            <button onClick={() => onSelect(med)} className="select-button-ajout-rapport">Sélectionner</button>
                         </li>
                     ))}
                 </ul>

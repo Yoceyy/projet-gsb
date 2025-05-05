@@ -1,15 +1,15 @@
-.info-user {
+.info-user-ajoutrapport {
     margin: 30px;
     font-family: Arial, sans-serif;
 }
 
-.menu {
+.menu-ajout-rapport {
     display: flex;
     gap: 20px;
     margin-bottom: 20px;
 }
 
-.menu button {
+.menu-ajout-rapport button {
     background-color: transparent;
     border: none;
     border-bottom: 2px solid transparent;
@@ -18,7 +18,7 @@
     cursor: pointer;
 }
 
-.menu button.active-tab {
+.menu-ajout-rapport button.active-tab {
     border-bottom: 2px solid blue;
     font-weight: bold;
     color: blue;
@@ -55,7 +55,7 @@ textarea {
     background-color: #0056b3;
 }
 
-.success-message {
+.success-message-ajout-rapport {
     background-color: #28a745; /* Vert */
     color: white;
     padding: 10px 20px;

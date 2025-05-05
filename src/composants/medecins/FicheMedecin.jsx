@@ -6,13 +6,18 @@ const FicheMedecin = ({ medecin, onUpdate }) => {
 
     // Charger les données mises à jour après le rafraîchissement
     useEffect(() => {
-        fetch(`http://localhost/restGSB/medecin/${medecin.id}`)
+        console.log("FicheMedecin useEffect");
+        fetch(`http://localhost/restGSB/medecin/`+formData.id)
+
+        
             .then((response) => {
+                console.log("Response:", response);
                 if (!response.ok) throw new Error("Erreur lors de la récupération des données");
                 return response.json();
             })
             .then((data) => setFormData(data))
             .catch((error) => console.error("Erreur:", error));
+            console.log("FormData:", formData);
     }, [medecin]);
 
     const handleChange = (e) => {
@@ -25,6 +30,7 @@ const FicheMedecin = ({ medecin, onUpdate }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log("FormData:", formData);
         fetch(`http://localhost/restGSB/majMedecin/${medecin.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -92,7 +98,7 @@ const FicheMedecin = ({ medecin, onUpdate }) => {
                     <input
                         type="text"
                         name="specialite"
-                        value={formData.specialite || ''}
+                        value={formData.specialite}
                         onChange={handleChange}
                         style={{ width: "100%" }}
                     />

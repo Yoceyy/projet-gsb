@@ -62,6 +62,7 @@ const Medecins = () => {
                         </button>
                     </div>
                     {activeTab === 'fiche' && <FicheMedecin medecin={selectedMedecin} onUpdate={handleUpdate} />}
+                    {console.log('selectedMedecin', selectedMedecin)}
                     {activeTab === 'rapports' && <RapportsMedecin medecin={selectedMedecin} />}
                     <button onClick={() => setSelectedMedecin(null)} style={{ marginTop: '20px', padding: '10px', backgroundColor: '#6c757d', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
                         Retour à la liste
