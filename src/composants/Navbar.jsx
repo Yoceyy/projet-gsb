@@ -25,6 +25,7 @@ const Navbar = () => {
                 <Link to="/home">Dashboard</Link>
                 <Link to="/home/rapport">Rapport</Link>
                 <Link to="/home/medecin">Medecins</Link>
+                <Link to="/home/visiteur">Visiteur</Link>
             </ul>
             <div className="navbar-user">
                 <img
